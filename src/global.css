@@ -1,0 +1,56 @@
+@import url("/src/element-style/input.css");
+@import url("/src/element-style/button.css");
+
+@import url("/src/components/top_menu/top_menu.css");
+@import url("/src/components/dialog_container/dialog_container.css");
+@import url("/src/components/password_input/password_input.css");
+
+
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+  font-family: monospace;
+}
+
+.absolute_center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.btn_close {
+  width: 18px;
+  height: 18px;
+
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+.btn_close:active {
+  position: absolute;
+  top: 4px;
+  right: 5px;
+
+  transition: 0.3s ease;
+}
+.fade {
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #000a;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.hide {
+  display: none;
+}
