@@ -1,0 +1,80 @@
+.dialog_container {
+  padding: 5px;
+  width: 620px;
+
+  border: 2px solid #dedede;
+  border-radius: 5px;
+  background-color: #e8e8e8ef;
+  box-shadow: 0 0 5px #dedede99;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+
+  position: relative;
+  z-index: 2;
+}
+
+.dialog_container .input_area {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.dialog_container .input_area > * {
+  max-width: 300px;
+
+  flex-grow: 1;
+}
+
+.dialog_container .button_area {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.dialog_container .button_area > * {
+  max-width: 300px;
+
+  text-transform: uppercase;
+
+  flex-grow: 1;
+}
+
+@media only screen and (max-width: 279px) {
+  .dialog_container {
+    width: 95%;
+  }
+  .dialog_container .button_area {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .dialog_container .button_area > * {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 280px) and (max-width: 399px) {
+  .dialog_container {
+    width: 90%;
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 599px) {
+  .dialog_container {
+    width: 80%;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 767px) {
+  .dialog_container {
+    width: 80%;
+  }
+}
