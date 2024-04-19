@@ -1,0 +1,7 @@
+#pokedex_page {
+  height: calc(100vh - 44px);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
