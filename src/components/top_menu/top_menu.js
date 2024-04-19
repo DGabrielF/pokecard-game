@@ -1,5 +1,5 @@
 import { pageHub } from "../../main.js";
-import { state } from "../../scripts/state.js";
+import { state } from "../../services/state.js";
 
 export class TopMenu{
   constructor() {
@@ -51,6 +51,11 @@ export class TopMenu{
       if ((!this.user && !item.logged) || this.user) {
         const button = document.createElement("button");
         button.textContent = item.name;
+        button.addEventListener("click", () => {
+          this._menuHub();
+          state.floatElements.fade.object.hide()
+          pageHub(item.slug);          
+        })
         gameMenuList.appendChild(button);
       }
     });
