@@ -1,0 +1,156 @@
+#shop_page {
+  height: calc(100vh - 44px);
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  position: relative;
+}
+
+.shop_types {
+  padding: 10px 30px 10px 10px;
+  min-width: 130px;
+  width: 20%;
+  max-width: 200px;
+  height: 100%;
+
+  border-right: 2px solid #dedede;
+  border-radius: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: #e8e8e8;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+
+  position: relative;
+}
+
+.shop_types > * {
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#hide_shop_types {
+  width: 20px;
+  height: 99%;
+
+  position: absolute;
+  bottom: 50%;
+  right: 2px;
+
+  transform: translate(0, 50%);
+  transition: none;
+}
+
+#hide_shop_types:active {
+  position: absolute;
+  top: initial;
+  bottom: calc(50% - 1px);
+  right: 2px;
+
+  transform: translate(0, 50%);
+  transition: none;
+}
+
+.shop_area {
+  margin: 5px;
+  width: 100%;
+
+  border: 2px solid #dededeaa;
+  border-radius: 5px;
+  background-color: #e8e8e8aa;
+}
+
+.offer_filters {
+  padding: 13px 13px 12px 0;
+  width: 100%;
+
+  border-bottom: 2px solid #dedede
+  ;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.offers_list {
+  padding: 5px;
+  margin: 5px;
+
+  border: 2px solid #dededeaa;
+  border-radius: 5px;
+  background-color: #e8e8e8aa;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.offer_item {
+  padding: 5px;
+  width: 100%;
+
+  background-color: #e8e8e8;
+
+  outline: 1px solid #00002005;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.offer_item>button.confirm>img {
+  width: 22px;
+  height: 22px;
+
+}
+
+@media only screen and (max-width: 279px) {
+  .shop_types {
+    padding: 10px 10px 30px 10px;
+    width: 100vw;
+    max-width: none;
+    height: 99%;
+
+    border: 2px solid #dedede;
+    border-top: none;
+    border-radius: none;
+    border-radius: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  #hide_shop_types {
+    width: 99%;
+    height: 20px;
+    position: absolute;
+    bottom: 2px;
+    right: 50%;
+    transform: translate(50%, 0);
+  }
+
+  #hide_shop_types>img {
+    rotate: 90deg;
+  }
+}
+@media only screen and (min-width: 280px) and (max-width: 399px) {
+  .shop_types {
+    width: 75vw;
+    height: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}

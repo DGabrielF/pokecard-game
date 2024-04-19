@@ -1,16 +1,18 @@
 button {
-  padding: 2px;
+  padding: 3px 5px;
 
   text-transform: uppercase;
 
   border: none;
   border-radius: 5px;
-  outline: 1px solid #e5e5e5;
+  outline: 1px solid #dedede;
   background-color: transparent;
+  box-shadow: 0 0 1px #0001;
 
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 5px;
 
   transition: 0.3s ease;
   appearance: none;

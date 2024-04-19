@@ -4,6 +4,13 @@
 @import url("/src/components/top_menu/top_menu.css");
 @import url("/src/components/dialog_container/dialog_container.css");
 @import url("/src/components/password_input/password_input.css");
+@import url("/src/components/poke_card/poke_card.css");
+@import url("/src/components/search/search.css");
+@import url("/src/components/card_area/card_area.css");
+@import url("/src/components/page_menu/page_menu.css");
+
+@import url("/src/pages/pokedex/pokedex.css");
+@import url("/src/pages/shop/shop.css");
 
 
 * {
@@ -53,4 +60,8 @@
 }
 .hide {
   display: none;
+}
+
+li{
+  list-style: none;
 }
