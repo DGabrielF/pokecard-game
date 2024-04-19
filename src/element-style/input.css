@@ -2,6 +2,8 @@ input {
   padding: 3px 2px 2px 5px;
   width: 100%;
 
+  text-align: center;
+
   border: none;
   border-radius: 5px;
   background-color: #fafafa;

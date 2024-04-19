@@ -32,3 +32,33 @@ button:active {
 
   transition: 0.3s ease;
 }
+
+button:disabled {
+  padding: 2px;
+
+  text-transform: uppercase;
+
+  border: none;
+  border-radius: 5px;
+  outline: 1px solid #e5e5e5;
+  background-color: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.3s ease;
+  appearance: none;
+  cursor: default;
+}
+button:disabled:hover {
+  background-color: transparent;
+  outline: 1px solid #e5e5e5;
+}
+button:disabled:active {
+  background-color: transparent;
+  outline: 1px solid #e5e5e5;
+
+  position: relative;
+  top: 0px;
+}
