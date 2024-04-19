@@ -1,6 +1,8 @@
 .poke_card{
   padding: 5px;
+  min-width: 183px;
   width: 183px;
+  min-height: 250px;
   height: 250px;
 
   border: 1px solid #646464;
