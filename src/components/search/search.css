@@ -1,0 +1,17 @@
+.search_area {
+  padding: 5px 10px;
+  height: 40px;
+  width: 100%;
+
+  border-bottom: 2px solid #dedede;
+  background-color: #e8e8e8;
+
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.search_area img {
+  width: 23px;
+  height: 23px;
+}
