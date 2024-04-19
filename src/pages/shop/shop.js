@@ -2,7 +2,7 @@ import { createSearchArea } from "../../components/search/search.js";
 import { ViewService } from "../../services/view.js";
 
 const localState = {
-  selectedOffer: "npc",
+  selectedOffer: "trade",
   offers: {
     npc:[
       {
@@ -58,13 +58,13 @@ const localState = {
       {
         offeredPokeList: [
           {
-            offeredPokeId: 1,
-            offeredPokeName: "bulbasaur",
+            pokeId: 1,
+            pokeName: "bulbasaur",
             quantity: 5,
           }
         ],          
-        desiredPokeId: 3,
-        desiredPokeName: "venusaur",
+        pokeId: 3,
+        pokeName: "venusaur",
         player: "Ash Katchum",
         offerType: "troca",
         createdAt: new Date("2024-04-19"),
@@ -93,6 +93,7 @@ const localState = {
       {
         name: "troque",
         slug: "trade",
+        function: showTradeOffers,
       }
     ]
   }
@@ -143,10 +144,14 @@ function createOfferItems() {
 function createShopMenu() {
   const shopMenu = document.createElement("nav");
   shopMenu.classList.add("shop_menu");
+
+  const buttonArea = document.createElement("div");
+  buttonArea.classList.add("button_area");
+  shopMenu.appendChild(buttonArea)
   
   const menuTitle = document.createElement("h2");
   menuTitle.textContent = "Mercado";
-  shopMenu.appendChild(menuTitle);
+  buttonArea.appendChild(menuTitle);
 
   localState.menu.buttons.forEach(item => {
     const button = document.createElement("button");
@@ -157,17 +162,30 @@ function createShopMenu() {
       localState.selectedOffer = item.slug;
       updateShop()
     });
-    shopMenu.appendChild(button);
+    buttonArea.appendChild(button);
   });
 
   const btnHideMenu = document.createElement("button");
   btnHideMenu.id = "hide_shop_menu";
+  btnHideMenu.addEventListener("click", () => {
+    toggleMenu()
+  })
   const btnHideMenuImage = document.createElement("img");
   btnHideMenuImage.src = "src/assets/icons/caret-left.svg";
   btnHideMenu.appendChild(btnHideMenuImage);
   shopMenu.appendChild(btnHideMenu);
 
   return shopMenu
+}
+
+function toggleMenu() {
+  const shopMenu = document.querySelector(".shop_menu")
+  localState.menu.isOpen = !localState.menu.isOpen
+  if (localState.menu.isOpen) {
+    shopMenu.classList.remove("closed")
+  } else {
+    shopMenu.classList.add("closed")
+  }
 }
 
 function updateShop() {
@@ -183,7 +201,7 @@ function updateShop() {
 }
 
 function showNpcOffer(offer) {
-  const offerList = document.querySelector(".offer_list")
+  const offerList = document.querySelector(".offer_list");
 
   const listItem = document.createElement("li");
   listItem.classList.add("offer_item");
@@ -249,4 +267,52 @@ function createConfirmButton(offer) {
   price.textContent = offer.price;
   btnConfirm.appendChild(price);
   return btnConfirm;
+}
+
+function showTradeOffers(offer) {
+  const offerList = document.querySelector(".offer_list");
+
+  const listItem = document.createElement("li");
+  listItem.classList.add("offer_item");
+
+  const player = document.createElement("span");
+  player.textContent = offer.player;
+  listItem.appendChild(player);
+  
+  const offerType = document.createElement("span");
+  offerType.textContent = offer.offerType
+  listItem.appendChild(offerType);
+  
+  const quantity = document.createElement("span");
+  let quantityValue = 0
+  offer.offeredPokeList.forEach(poke => {
+    quantityValue += poke.quantity;
+  })
+  quantity.textContent = `${quantityValue} carta${quantityValue > 1 ? "s" : ""}`;
+  listItem.appendChild(quantity);
+  
+  const span = document.createElement("span");
+  span.textContent = "por"
+  listItem.appendChild(span);
+
+  const cardInfo = document.createElement("span");
+  cardInfo.classList.add("card");
+
+  const cardId = document.createElement("span");
+  cardId.classList.add("card_id");
+  cardId.textContent = `#${offer.pokeId} `;
+  cardInfo.appendChild(cardId);
+
+  const cardName = document.createElement("span");
+  cardName.classList.add("card_name");
+  cardName.textContent = offer.pokeName;
+  cardInfo.appendChild(cardName);
+  
+  listItem.appendChild(cardInfo);
+  
+  const btnDetails = document.createElement("button");
+  btnDetails.textContent = "detalhes"
+  listItem.appendChild(btnDetails);
+
+  offerList.appendChild(listItem);
 }

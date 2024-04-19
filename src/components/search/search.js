@@ -1,4 +1,4 @@
-export function createSearcArea() {
+export function createSearchArea() {
   const searchArea = document.createElement("div");
   searchArea.classList.add("search_area");
 
