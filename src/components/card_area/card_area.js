@@ -1,4 +1,4 @@
-import { ViewService } from "../../scripts/view.js";
+import { ViewService } from "../../services/view.js";
 
 export class CardArea{
   constructor(elementsArray) {

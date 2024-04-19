@@ -1,6 +1,7 @@
 import { CardArea } from "../../components/card_area/card_area.js";
 import { PageMenu } from "../../components/page_menu/page_menu.js";
-import { createSearcArea } from "../../components/search/search.js";
+import { createSearchArea } from "../../components/search/search.js";
+import { ViewService } from "../../services/view.js";
 
 const localState = {
   cardArray: {
@@ -42,11 +43,13 @@ const localState = {
 export function pokedex() {
   const body = document.querySelector("body");
 
-  const pokedexPage = document.createElement("section")
-  pokedexPage.id = "pokedex_page"
-  body.appendChild(pokedexPage)
+  ViewService.cleanSectionToNewPage()
 
-  const searchArea =  createSearcArea()
+  const pokedexPage = document.createElement("section");
+  pokedexPage.id = "pokedex_page";
+  body.appendChild(pokedexPage);
+
+  const searchArea =  createSearchArea()
   pokedexPage.appendChild(searchArea)
 
   for (let i = 0; i < 20; i++) {
@@ -129,7 +132,9 @@ function updateColumnsNumber() {
 function setElementMaxWidth(element) {
   const style = window.getComputedStyle(element.target)
   if (style) {
-    localState.cardArea.maxHeight = style.getPropertyValue('max-height').match(/\d+/g).map(Number)[0];   
+    if (style.getPropertyValue('max-height').match(/\d+/g)) {
+      localState.cardArea.maxHeight = style.getPropertyValue('max-height').match(/\d+/g).map(Number)[0];
+    }
   }
 }
 
