@@ -50,20 +50,19 @@ export function pokedex() {
   pokedexPage.appendChild(searchArea)
 
   for (let i = 0; i < 20; i++) {
-    const div = document.createElement("div")
+    const div = document.createElement("div");
     div.classList.add("poke_card");
-    div.textContent = i
-    localState.cardArray.memory.push(div)
+    div.textContent = i;
+    localState.cardArray.memory.push(div);
   }
 
-  const cardAreaObj = new CardArea(localState.cardArray.toShow)
-  const cardArea = cardAreaObj.create()
-  pokedexPage.appendChild(cardArea)
+  const cardAreaObj = new CardArea(localState.cardArray.toShow);
+  const cardArea = cardAreaObj.create();
+  pokedexPage.appendChild(cardArea);
+
+  const pageMenu = new PageMenu(localState.pagesMenu.toShow);
+  pokedexPage.appendChild(pageMenu.create());
   
-
-  const pageMenu = new PageMenu(localState.pagesMenu.toShow)
-  pokedexPage.appendChild(pageMenu.create())
-
   const resizeObserver = new ResizeObserver(entries => {
     for (let entry of entries) {
       const maxChildrens = localState.card.limit;
@@ -78,15 +77,39 @@ export function pokedex() {
       
       if (localState.card.limit !== maxChildrens) {
         setGridTemplateStyle(entry);
-        setItemsToShow();
-        cardAreaObj.update(localState.cardArray.toShow, localState.cardArray.toShow.length)
         setPagesNumber();
-        setPagesMenuButtons();
-        pageMenu.update(localState.pagesMenu.toShow, localState.page.current);
+
+        updateAllContent(cardAreaObj, pageMenu);
       }
     }
   });
   resizeObserver.observe(cardArea)
+}
+
+function updateAllContent(cardAreaObj, pageMenu) {
+  setItemsToShow();
+  cardAreaObj.update(localState.cardArray.toShow, localState.cardArray.toShow.length);
+
+  setPagesMenuButtons();
+  setRangeOfButtons();
+  pageMenu.update(localState.pagesMenu.toShow, localState.page.current);
+  const previousPageButton = document.querySelector(".previous_page_menu_button");
+  previousPageButton.disabled = (localState.page.current <= 1)
+  if (localState.page.current > 1) {
+    previousPageButton.addEventListener("click", () => {
+      localState.page.current = localState.page.current - 1 >= 1 ? localState.page.current - 1 : 1;
+      updateAllContent(cardAreaObj, pageMenu)
+    })
+  }
+  addEventListenerToPageMenuButtons(cardAreaObj, pageMenu);
+  const nextPageButton = document.querySelector(".next_page_menu_button");
+  nextPageButton.disabled = (localState.page.current >= localState.page.total)
+  if (localState.page.current < localState.page.total) {
+    nextPageButton.addEventListener("click", () => {
+      localState.page.current = localState.page.current + 1 <= localState.page.total ? localState.page.current + 1 : localState.page.total;
+      updateAllContent(cardAreaObj, pageMenu)
+    })
+  }
 }
 
 function setItemsToShow() {
@@ -136,11 +159,9 @@ function setPagesMenuButtons() {
   const buttonsNumber = (localState.cardArea.width - widthOfPreviousAndNextButtonsWithGap ) / (buttonWidthWithGap);
 
   localState.pagesMenu.button.limit = Math.floor(buttonsNumber)
-  
-  setRangeOtButtons()
 }
 
-function setRangeOtButtons() {
+function setRangeOfButtons() {
   localState.pagesMenu.toShow = [];
   if (localState.page.total < localState.pagesMenu.button.limit){
     for (let i = 1; i <= localState.page.total; i++) {
@@ -161,5 +182,16 @@ function setRangeOtButtons() {
         initial += increment
       }
     }
+    localState.pagesMenu.toShow.sort((a, b) => a - b)
   }
+}
+
+function addEventListenerToPageMenuButtons(cardAreaObj, pageMenu) {
+  const pageButtons = document.querySelectorAll(".page_menu_button");
+  pageButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      localState.page.current = button.id;
+      updateAllContent(cardAreaObj, pageMenu)
+    });
+  });
 }
