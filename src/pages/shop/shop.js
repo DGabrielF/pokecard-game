@@ -193,11 +193,10 @@ function updateShop() {
   ViewService.cleanElementToUpdate(offerList)
 
   createOfferItems();
-  const menuButtons = document.querySelectorAll(".shop_menu>button")
+  const menuButtons = document.querySelectorAll(".shop_menu>.button_area>button")
   menuButtons.forEach (button => {
     button.disabled = (button.id === localState.selectedOffer);
-  })
-
+  });
 }
 
 function showNpcOffer(offer) {
