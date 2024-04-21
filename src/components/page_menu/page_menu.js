@@ -43,4 +43,39 @@ export class PageMenu{
     this.currentPage = currentPage
     this.updateElements(newArray);
   }
+
+  setPagesMenuButtons(areaWidth, buttonWidth, gapBetweenButtons) {
+    const previouAndNextButtons = 2 * buttonWidth + gapBetweenButtons;
+    const buttonWidthWithGap = buttonWidth + gapBetweenButtons
+  
+    const buttonsNumber = (areaWidth - previouAndNextButtons ) / (buttonWidthWithGap);
+  
+    return Math.floor(buttonsNumber)
+  }
+
+  setRangeOfButtons(totalOfButtons, limitOfButtons, currentButton) {
+    const toShow = [];
+    if (totalOfButtons < limitOfButtons){
+      for (let i = 1; i <= totalOfButtons; i++) {
+        toShow.push(i)
+      }
+    } else {
+      const buttonRange = Math.floor(limitOfButtons/2)
+  
+      const topLimit = currentButton + buttonRange
+      const bottomLimit = currentButton - buttonRange
+  
+      let initial = (bottomLimit < 1)? 1 : (topLimit > totalOfButtons) ? totalOfButtons: topLimit;
+      let increment = (bottomLimit < 1) ? 1 : -1;
+  
+      while (toShow.length < limitOfButtons) {
+        if (initial > 0 && initial <= totalOfButtons) {
+          toShow.push(initial)
+          initial += increment
+        }
+      }
+      toShow.sort((a, b) => a - b)
+    }
+    return toShow
+  }
 }
