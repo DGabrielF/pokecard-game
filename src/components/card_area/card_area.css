@@ -1,11 +1,12 @@
 .card_area{
   padding: 10px 10px;
+  margin: auto;
   max-height: calc(100vh - 120px);
   width: 100%;
 
   display: grid;
   grid-template-columns: auto auto ;
-  align-items: start;
+  align-items: center;
   justify-content: center;
   grid-gap: 10px;
 
