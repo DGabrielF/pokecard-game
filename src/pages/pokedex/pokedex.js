@@ -1,6 +1,7 @@
 import { CardArea } from "../../components/card_area/card_area.js";
 import { PageMenu } from "../../components/page_menu/page_menu.js";
 import { createSearchArea } from "../../components/search/search.js";
+import { state } from "../../services/state.js";
 import { ViewService } from "../../services/view.js";
 
 const localState = {
@@ -61,6 +62,7 @@ export function pokedex() {
 
   const cardAreaObj = new CardArea(localState.cardArray.toShow);
   const cardArea = cardAreaObj.create();
+  cardArea.style.height = `calc(100vh - 44px - 40px - 44px)`;
   pokedexPage.appendChild(cardArea);
 
   const pageMenu = new PageMenu(localState.pagesMenu.toShow);
@@ -70,17 +72,22 @@ export function pokedex() {
     for (let entry of entries) {
       const maxChildrens = localState.card.limit;
       setElementWidth(entry);
-      updateColumnsNumber();
+
+      localState.grid.columns = cardAreaObj.getColumnsNumber(localState.cardArea.width, state.settings.card.sizes[state.settings.card.sizeSelected].width);
+
       const style = window.getComputedStyle(entry.target);
       if (style) {
         setElementMaxWidth(entry);
-        updateRowsNumber();
+
+        localState.grid.rows = cardAreaObj.getRowsNumber(localState.cardArea.maxHeight, state.settings.card.sizes[state.settings.card.sizeSelected].height);
       }
-      updateMaxChildrens();
+
+      localState.card.limit = cardAreaObj.getMaxChildrens(localState.grid.columns, localState.grid.rows);
       
       if (localState.card.limit !== maxChildrens) {
-        setGridTemplateStyle(entry);
-        setPagesNumber();
+        cardAreaObj.setGridTemplateStyle(localState.grid.columns, localState.grid.rows)
+
+        localState.page.total = cardAreaObj.setPagesNumber(localState.cardArray.memory, localState.card.limit);
 
         updateAllContent(cardAreaObj, pageMenu);
       }
@@ -90,12 +97,16 @@ export function pokedex() {
 }
 
 function updateAllContent(cardAreaObj, pageMenu) {
-  setItemsToShow();
+  localState.cardArray.toShow = cardAreaObj.getItemsToShow(localState.page.current, localState.card.limit, localState.cardArray.memory);
+
   cardAreaObj.update(localState.cardArray.toShow, localState.cardArray.toShow.length);
 
-  setPagesMenuButtons();
-  setRangeOfButtons();
+  localState.pagesMenu.button.limit = pageMenu.setPagesMenuButtons(localState.cardArea.width, localState.pagesMenu.button.width, localState.pagesMenu.gap.row);
+
+  localState.pagesMenu.toShow = pageMenu.setRangeOfButtons(localState.page.total, localState.pagesMenu.button.limit, localState.page.current);
+
   pageMenu.update(localState.pagesMenu.toShow, localState.page.current);
+  
   const previousPageButton = document.querySelector(".previous_page_menu_button");
   previousPageButton.disabled = (localState.page.current <= 1)
   if (localState.page.current > 1) {
@@ -106,7 +117,7 @@ function updateAllContent(cardAreaObj, pageMenu) {
   }
   addEventListenerToPageMenuButtons(cardAreaObj, pageMenu);
   const nextPageButton = document.querySelector(".next_page_menu_button");
-  nextPageButton.disabled = (localState.page.current >= localState.page.total)
+  nextPageButton.disabled = (localState.page.current <= 1)
   if (localState.page.current < localState.page.total) {
     nextPageButton.addEventListener("click", () => {
       localState.page.current = localState.page.current + 1 <= localState.page.total ? localState.page.current + 1 : localState.page.total;
@@ -115,80 +126,12 @@ function updateAllContent(cardAreaObj, pageMenu) {
   }
 }
 
-function setItemsToShow() {
-  const firstElement = localState.card.limit * (localState.page.current - 1)
-  const lastElement = localState.card.limit * localState.page.current
-  localState.cardArray.toShow = localState.cardArray.memory.slice(firstElement, lastElement);
-}
-
 function setElementWidth(element) {
   localState.cardArea.width = element.contentRect.width;
 }
 
-function updateColumnsNumber() {
-  localState.grid.columns = Math.floor(localState.cardArea.width/localState.card.width)
-}
-
 function setElementMaxWidth(element) {
-  const style = window.getComputedStyle(element.target)
-  if (style) {
-    if (style.getPropertyValue('max-height').match(/\d+/g)) {
-      localState.cardArea.maxHeight = style.getPropertyValue('max-height').match(/\d+/g).map(Number)[0];
-    }
-  }
-}
-
-function setGridTemplateStyle(element) {
-  element.target.style.gridTemplateColumns = `repeat(${localState.grid.columns}, auto)`;
-  element.target.style.gridTemplateRowns = `repeat(${localState.grid.rows}, auto)`;
-}
-
-function updateRowsNumber() {
-  localState.grid.rows = Math.floor(localState.cardArea.maxHeight/localState.card.height)
-}
-
-function updateMaxChildrens() {
-  localState.card.limit = localState.grid.columns * localState.grid.rows;
-}
-
-function setPagesNumber() {
-  const reminder = localState.cardArray.memory.length % localState.card.limit;
-  const whole = Math.floor(localState.cardArray.memory.length / localState.card.limit)
-  localState.page.total = reminder == 0 ? whole : whole + 1;
-}
-
-function setPagesMenuButtons() {
-  const widthOfPreviousAndNextButtonsWithGap = 2 * localState.pagesMenu.button.width + localState.pagesMenu.gap.row;
-  const buttonWidthWithGap = localState.pagesMenu.button.width + localState.pagesMenu.gap.row
-
-  const buttonsNumber = (localState.cardArea.width - widthOfPreviousAndNextButtonsWithGap ) / (buttonWidthWithGap);
-
-  localState.pagesMenu.button.limit = Math.floor(buttonsNumber)
-}
-
-function setRangeOfButtons() {
-  localState.pagesMenu.toShow = [];
-  if (localState.page.total < localState.pagesMenu.button.limit){
-    for (let i = 1; i <= localState.page.total; i++) {
-      localState.pagesMenu.toShow.push(i)
-    }
-  } else {
-    const buttonRange = Math.floor(localState.pagesMenu.button.limit/2)
-
-    const topLimit = localState.page.current + buttonRange
-    const bottomLimit = localState.page.current - buttonRange
-
-    let initial = (bottomLimit < 1)? 1 : (topLimit > localState.page.total) ? localState.page.total: topLimit;
-    let increment = (bottomLimit < 1) ? 1 : -1;
-
-    while (localState.pagesMenu.toShow.length < localState.pagesMenu.button.limit) {
-      if (initial > 0 && initial <= localState.page.total) {
-        localState.pagesMenu.toShow.push(initial)
-        initial += increment
-      }
-    }
-    localState.pagesMenu.toShow.sort((a, b) => a - b)
-  }
+  localState.cardArea.maxHeight = element.contentRect.height;
 }
 
 function addEventListenerToPageMenuButtons(cardAreaObj, pageMenu) {
