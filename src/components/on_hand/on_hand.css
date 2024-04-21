@@ -1,0 +1,24 @@
+.on_hand_area {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.on_hand_area>h3 {
+  padding: 5px;
+  width: 100%;
+
+  text-align: center;
+  text-transform: capitalize;
+
+  border-top: 2px solid #dedede;
+  border-bottom: 2px solid #dedede;
+  background-color: #e8e8e8;
+}
+
+.on_hand_area>.hand_cards {
+  padding: 5px;
+  width: 100%;
+}
