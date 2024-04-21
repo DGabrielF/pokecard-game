@@ -1,18 +1,18 @@
-@import url("src/element-style/button.css");
-@import url("src/element-style/input.css");
+@import url("./element-style/button.css");
+@import url("./element-style/input.css");
 
-@import url("src/components/card_area/card_area.css");
-@import url("src/components/dialog_container/dialog_container.css");
-@import url("src/components/on_hand/on_hand.css");
-@import url("src/components/page_menu/page_menu.css");
-@import url("src/components/password_input/password_input.css");
-@import url("src/components/poke_card/poke_card.css");
-@import url("src/components/search/search.css");
-@import url("src/components/top_menu/top_menu.css");
+@import url("./components/card_area/card_area.css");
+@import url("./components/dialog_container/dialog_container.css");
+@import url("./components/on_hand/on_hand.css");
+@import url("./components/page_menu/page_menu.css");
+@import url("./components/password_input/password_input.css");
+@import url("./components/poke_card/poke_card.css");
+@import url("./components/search/search.css");
+@import url("./components/top_menu/top_menu.css");
 
-@import url("src/pages/deck/deck.css");
-@import url("src/pages/pokedex/pokedex.css");
-@import url("src/pages/shop/shop.css");
+@import url("./pages/deck/deck.css");
+@import url("./pages/pokedex/pokedex.css");
+@import url("./pages/shop/shop.css");
 
 
 * {
