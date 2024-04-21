@@ -1,6 +1,7 @@
 import { Fade } from "../components/fade/fade.js";
 import { deck } from "../pages/deck/deck.js";
 import { pokedex } from "../pages/pokedex/pokedex.js";
+import { shop } from "../pages/shop/shop.js";
 import { signin } from "../pages/signin/signin.js";
 import { signup } from "../pages/signup/signup.js";
 
@@ -34,12 +35,16 @@ export const state = {
         function: signup,
       },
       {
-        name: "pokedex",
-        function: pokedex,
+        name: "shop",
+        function: shop,
       },
       {
         name: "deck",
         function: deck,
+      },
+      {
+        name: "pokedex",
+        function: pokedex,
       }
     ]
   },
@@ -127,7 +132,7 @@ export const state = {
   },
   settings: {
     card: {
-      sizeSelected: "xLarge",
+      sizeSelected: "small",
       sizes: {
         xSmall: {
           width: 69,
