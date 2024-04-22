@@ -9,10 +9,18 @@ export const state = {
   user: {
     uuid: "123amsdjhqku2y3123-1231245-sadsd",
     name: "Ash Katchum",
-    coins: 0,
+    coins: 10000,
+    luck: 0,
     friends: [],
-    cards: [],
-    hand: [],
+    cards: [
+      {id: 25, quantity: 1},
+      {id: 1, quantity: 1},
+      {id: 4, quantity: 1},
+      {id: 5, quantity: 1},
+      {id: 12, quantity: 1},
+      {id: 16, quantity: 1}
+    ],
+    hand: [25, 1, 4, 7, 12, 16],
     stats:[
       {
         wins: 0,
