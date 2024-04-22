@@ -1,8 +1,13 @@
+import { DialogContainer } from "../../components/dialog_container/dialog_container.js";
+import { Fade } from "../../components/fade/fade.js";
+import { PokeCard } from "../../components/poke_card/poke_card.js";
 import { createSearchArea } from "../../components/search/search.js";
+import { PokeApi } from "../../services/api.js";
+import { state } from "../../services/state.js";
 import { ViewService } from "../../services/view.js";
 
 const localState = {
-  selectedOffer: "trade",
+  selectedOffer: "npc",
   offers: {
     npc:[
       {
@@ -115,6 +120,23 @@ export function shop() {
   const shopArea = document.createElement("div");
   shopArea.classList.add("shop_area");
 
+  const moneyArea = document.createElement("div");
+  moneyArea.classList.add("money_area")
+  const moneySpan = document.createElement("span");
+  moneySpan.id = "money"
+  moneySpan.textContent = `Você tem P$ ${state.user.coins}`
+  moneyArea.appendChild(moneySpan)
+  const oneCoin = document.createElement("img");
+  oneCoin.src = "src/assets/icons/single-coin.svg"
+  moneyArea.appendChild(oneCoin)
+  const coin = document.createElement("img");
+  coin.src = "src/assets/icons/stand-coin.svg"
+  moneyArea.appendChild(coin)
+  const twoCoins = document.createElement("img");
+  twoCoins.src = "src/assets/icons/double-coins.svg"
+  moneyArea.appendChild(twoCoins)
+  shopArea.appendChild(moneyArea)
+
   const searchArea = createSearchArea();
   shopArea.appendChild(searchArea);
 
@@ -147,7 +169,7 @@ function createShopMenu() {
 
   const buttonArea = document.createElement("div");
   buttonArea.classList.add("button_area");
-  shopMenu.appendChild(buttonArea)
+  shopMenu.appendChild(buttonArea);
   
   const menuTitle = document.createElement("h2");
   menuTitle.textContent = "Mercado";
@@ -215,6 +237,7 @@ function showNpcOffer(offer) {
 
   const btnConfirm = createConfirmButton(offer)
   listItem.appendChild(btnConfirm);
+
   offerList.appendChild(listItem);
 }
 
@@ -253,8 +276,108 @@ function showBuyingAndSellingOffers(offer) {
 }
 
 function createConfirmButton(offer) {
+  const body = document.querySelector("body");
   const btnConfirm = document.createElement("button");
   btnConfirm.classList.add("confirm");
+  btnConfirm.addEventListener("click", () => {
+    const confirm = document.createElement("button");
+    confirm.textContent = "sim";
+    confirm.addEventListener("click", async () => {
+      if (state.user.coins < offer.price) {
+        console.log("Você não tem dinheiro suficiente")
+        fadeObj.hide()
+        dialogContainerObj.delete();
+      } else {
+        fadeObj.hide()
+        dialogContainerObj.delete();
+        
+        const btnExit = document.createElement("button");
+        btnExit.textContent = "sair"
+        btnExit.disabled = true;
+        btnExit.addEventListener("click", () => {
+          fadeObj.hide()
+          dialogContainerObj.delete();
+        })
+
+        const dialogPurchasedContent = {
+          "title": "Parabéns",
+          "subtitle": "Você conseguiu pegar as sequintes cartas:",
+          "inputsArray": [],
+          "buttonsArray": [btnExit],
+        }
+
+        const dialogPurchasedObj = new DialogContainer(dialogPurchasedContent);
+        const dialogPurchased = dialogPurchasedObj.create()
+        body.appendChild(dialogPurchased);
+
+        const fadePurchasedObj = new Fade()
+        const fadeElement = fadePurchasedObj.select()
+        fadePurchasedObj.show()
+
+        const btnClose = document.querySelector(".btn_close");
+        btnClose.disabled = true;
+        btnClose.addEventListener("click", () => {
+          fadeObj.hide()
+          dialogPurchasedObj.delete();
+        })
+
+        const purchasedCardsArea = document.createElement("div");
+        purchasedCardsArea.classList.add("purchased_cards")
+        dialogPurchased.insertBefore(purchasedCardsArea, dialogPurchased.querySelector(".button_area"))
+
+        const purchasedCards = [];
+        while (purchasedCards.length < offer.quantity) {
+          const pokeId = Math.floor(Math.random()*1017)+1;
+          const pokeData = await PokeApi.getPokemon(pokeId)
+          const cardLuck = Math.random()*2;
+          if (state.user.luck * cardLuck > pokeData.base_experience) {
+            purchasedCards.push(pokeData)
+            const card = new PokeCard(pokeData, state.settings).create()
+            purchasedCardsArea.appendChild(card)
+            state.user.luck = (state.user.luck - pokeData.base_experience) / 2 > 0 ? (state.user.luck - pokeData.base_experience) / 2 : 0
+          } else {
+            state.user.luck += (pokeData.base_experience - (state.user.luck * cardLuck)) / 10;
+          }
+        }
+        state.user.coins -= offer.price;
+        purchasedCards.forEach(card => {
+          const foundCard = state.user.cards.find(poke => poke.id === card.id)
+          if (foundCard) {
+            foundCard.quantity += 1;
+          } else {
+            state.user.cards.push({id: card.id, quantity: 1})
+          }
+        })
+        console.log(state.user.cards)
+        const moneySpan = document.querySelector("#money")
+        moneySpan.textContent = `Você tem P$ ${state.user.coins}`
+        btnExit.disabled = false;
+        btnClose.disabled = false;
+      }
+    })
+
+    const dialogContent = {
+      "title": "COMPRA",
+      "subtitle": `Você deseja comprar o pacote com ${offer.quantity} carta${offer.quantity>1?"s":""} por P$ ${offer.price}`,
+      "inputsArray": [],
+      "buttonsArray": [confirm],
+    };
+
+    const dialogContainerObj = new DialogContainer(dialogContent);
+    body.appendChild(dialogContainerObj.create());
+    const fadeObj = new Fade()
+    const fadeElement = fadeObj.select()
+    fadeObj.show()
+    fadeElement.addEventListener("click", () => {
+      fadeObj.hide()
+      dialogContainerObj.delete();
+    })
+    const btnClose = document.querySelector(".btn_close");
+    btnClose.addEventListener("click", () => {
+      fadeObj.hide()
+      dialogContainerObj.delete();
+    })
+  })
 
   const btnConfirmImage = document.createElement("img");
   btnConfirmImage.src = "src/assets/icons/money-offer.svg";

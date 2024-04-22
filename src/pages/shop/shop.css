@@ -27,6 +27,23 @@
   position: relative;
 }
 
+.money_area {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+}
+.money_area > span {
+  margin-right: 1%;
+  font-weight: 900;
+  letter-spacing: 1.1px; 
+}
+.money_area > img {
+  width: 18px;
+  height: 18px; 
+}
+
 .shop_menu > .button_area  {
   padding: 10px 0px 10px 10px;
   width: 100%;
@@ -112,6 +129,22 @@
 .offer_item>button.confirm>img {
   width: 22px;
   height: 22px;
+}
+
+.purchased_cards {
+  max-width: 100%;
+  max-height: 60vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  overflow: auto;
+}
+
+.purchased_cards > * {
+  margin: 1vw;
 }
 
 @media only screen and (max-width: 344px) {
