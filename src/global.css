@@ -1,5 +1,6 @@
 @import url("./element-style/button.css");
 @import url("./element-style/input.css");
+@import url("./element-style/scrollbar.css");
 
 @import url("./components/card_area/card_area.css");
 @import url("./components/dialog_container/dialog_container.css");
@@ -13,6 +14,7 @@
 @import url("./pages/deck/deck.css");
 @import url("./pages/pokedex/pokedex.css");
 @import url("./pages/shop/shop.css");
+@import url("./pages/settings/settings.css");
 
 
 * {
