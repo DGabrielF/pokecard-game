@@ -73,13 +73,13 @@ export function pokedex() {
       const maxChildrens = localState.card.limit;
       setElementWidth(entry);
 
-      localState.grid.columns = cardAreaObj.getColumnsNumber(localState.cardArea.width, state.settings.card.sizes[state.settings.card.sizeSelected].width);
+      localState.grid.columns = cardAreaObj.getColumnsNumber(localState.cardArea.width, state.settings.card.options[state.settings.card.optionSelected].width);
 
       const style = window.getComputedStyle(entry.target);
       if (style) {
         setElementMaxWidth(entry);
 
-        localState.grid.rows = cardAreaObj.getRowsNumber(localState.cardArea.maxHeight, state.settings.card.sizes[state.settings.card.sizeSelected].height);
+        localState.grid.rows = cardAreaObj.getRowsNumber(localState.cardArea.maxHeight, state.settings.card.options[state.settings.card.optionSelected].height);
       }
 
       localState.card.limit = cardAreaObj.getMaxChildrens(localState.grid.columns, localState.grid.rows);
