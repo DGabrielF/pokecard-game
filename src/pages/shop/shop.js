@@ -348,7 +348,6 @@ function createConfirmButton(offer) {
             state.user.cards.push({id: card.id, quantity: 1})
           }
         })
-        console.log(state.user.cards)
         const moneySpan = document.querySelector("#money")
         moneySpan.textContent = `Você tem P$ ${state.user.coins}`
         btnExit.disabled = false;

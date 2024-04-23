@@ -10,50 +10,50 @@ export function signin() {
   
   const buttonsArray = addButtons();
 
-  const dialog_content = {
+  const dialogContent = {
     "title": "ENTRAR",
     "subtitle": "Venha ser o maior mestre pokemon!",
     "inputsArray": inputsArray,
     "buttonsArray": buttonsArray,
   }
-  const dialogContainerObj = new DialogContainer(dialog_content);
+  const dialogContainerObj = new DialogContainer(dialogContent);
   body.appendChild(dialogContainerObj.create());
-  const fadeObj = new Fade()
-  const fadeElement = fadeObj.select()
-  fadeObj.show()
+  const fadeObj = new Fade();
+  const fadeElement = fadeObj.select();
+  fadeObj.show();
   fadeElement.addEventListener("click", () => {
-    fadeObj.hide()
+    fadeObj.hide();
     dialogContainerObj.delete();
-  })
+  });
   const btnClose = document.querySelector(".btn_close");
   btnClose.addEventListener("click", () => {
     fadeObj.hide()
     dialogContainerObj.delete();
-  })
+  });
 
   function addInputs() {
-    const inputsArray = []
-    const inp_user = document.createElement("input")
-    inp_user.type = "text"
-    inp_user.placeholder = "Usuário"
-    inputsArray.push(inp_user)
+    const inputsArray = [];
+    const inpUser = document.createElement("input");
+    inpUser.type = "text";
+    inpUser.placeholder = "Usuário";
+    inputsArray.push(inpUser);
 
-    inputsArray.push(new PasswordInput().create())
-    return inputsArray
-  }
+    inputsArray.push(new PasswordInput().create());
+    return inputsArray;
+  };
 
   function addButtons() {
     const buttonsArray = [];
-    const btn_signin = document.createElement("button");
-    btn_signin.textContent = "entrar";
-    buttonsArray.push(btn_signin);
+    const btnSignin = document.createElement("button");
+    btnSignin.textContent = "entrar";
+    buttonsArray.push(btnSignin);
 
-    const btn_signup = document.createElement("button");
-    btn_signup.textContent = "registrar";
-    btn_signup.addEventListener("click", () => {
-      pageHub("signup")
-    })
-    buttonsArray.push(btn_signup);
-    return buttonsArray
-  }
-}
+    const btnSignup = document.createElement("button");
+    btnSignup.textContent = "registrar";
+    btnSignup.addEventListener("click", () => {
+      pageHub("signup");
+    });
+    buttonsArray.push(btnSignup);
+    return buttonsArray;
+  };
+};

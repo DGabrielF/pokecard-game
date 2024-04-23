@@ -10,13 +10,13 @@ export function signup() {
   
   const buttonsArray = addButtons()
 
-  const dialog_content = {
+  const dialogContent = {
     "title": "Registre-se",
     "subtitle": "Cadastre-se agora e ganhe P$ 1200",
     "inputsArray": inputsArray,
     "buttonsArray": buttonsArray,
   }
-  const dialogContainerObj = new DialogContainer(dialog_content)
+  const dialogContainerObj = new DialogContainer(dialogContent)
   body.appendChild(dialogContainerObj.create());
   const fadeObj = new Fade()
   const fadeElement = fadeObj.select()
@@ -33,15 +33,15 @@ export function signup() {
 
   function addInputs() {
     const inputsArray = []
-    const inp_user = document.createElement("input")
-    inp_user.type = "text"
-    inp_user.placeholder = "Usuário"
-    inputsArray.push(inp_user)
+    const inpUser = document.createElement("input")
+    inpUser.type = "text"
+    inpUser.placeholder = "Usuário"
+    inputsArray.push(inpUser)
 
-    const inp_email = document.createElement("input")
-    inp_email.type = "email"
-    inp_email.placeholder = "E-mail"
-    inputsArray.push(inp_email)
+    const inpEmail = document.createElement("input")
+    inpEmail.type = "email"
+    inpEmail.placeholder = "E-mail"
+    inputsArray.push(inpEmail)
 
     inputsArray.push(new PasswordInput().create())
     inputsArray.push(new PasswordInput(false, "confirme a senha").create())
@@ -50,16 +50,16 @@ export function signup() {
 
   function addButtons() {
     const buttonsArray = []
-    const btn_signup = document.createElement("button")
-    btn_signup.textContent = "registrar"
-    buttonsArray.push(btn_signup)
+    const btnSignup = document.createElement("button")
+    btnSignup.textContent = "registrar"
+    buttonsArray.push(btnSignup)
     
-    const btn_signin = document.createElement("button")
-    btn_signin.textContent = "sou membro"
-    btn_signin.addEventListener("click", () => {
+    const btnSignin = document.createElement("button")
+    btnSignin.textContent = "sou membro"
+    btnSignin.addEventListener("click", () => {
       pageHub("signin")
     })
-    buttonsArray.push(btn_signin)
+    buttonsArray.push(btnSignin)
     return buttonsArray
   }
 }
