@@ -3,6 +3,7 @@ import { HandCards } from "../../components/on_hand/on_hand.js";
 import { PageMenu } from "../../components/page_menu/page_menu.js";
 import { PokeCard } from "../../components/poke_card/poke_card.js";
 import { createSearchArea } from "../../components/search/search.js";
+import { PokeApi } from "../../services/api.js";
 import { state } from "../../services/state.js";
 import { ViewService } from "../../services/view.js";
 
@@ -41,196 +42,170 @@ const localState = {
       row: 5,
       column: 5,
     }
+  },
+  instances: {
+    cardArea: "",
+    pageMenu: "",
+    handCards: "",
   }
 }
 
-
-
-export function deck() {
+export async function deck() {
   const body = document.querySelector("body");
-
-  // loading settings
   
-
-  ViewService.cleanSectionToNewPage()
+  ViewService.cleanSectionToNewPage();
+  
+  await setHandCards();
+  await setAreaCards();
 
   const deckPage = document.createElement("section");
   deckPage.id = "deck_page";
   body.appendChild(deckPage);
 
-  const searchArea =  createSearchArea()
-  deckPage.appendChild(searchArea)
-  const bulbasaur = {
-    id: 1,
-    name: "bulbasaur",
-    "types": [
-      {
-        "slot": 1,
-        "type": {
-          "name": "grass",
-          "url": "https://pokeapi.co/api/v2/type/12/"
-        }
-      },
-      {
-        "slot": 2,
-        "type": {
-          "name": "poison",
-          "url": "https://pokeapi.co/api/v2/type/4/"
-        }
-      }
-    ],
-    sprites: {
-      other: {
-        dream_world:{
-          front_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
-        }
-      },
-      front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg",
-    },
-    stats: [
-      {
-        "base_stat": 45,
-        "effort": 0,
-        "stat": {
-          "name": "hp",
-          "url": "https://pokeapi.co/api/v2/stat/1/"
-        }
-      },
-      {
-        "base_stat": 49,
-        "effort": 0,
-        "stat": {
-          "name": "attack",
-          "url": "https://pokeapi.co/api/v2/stat/2/"
-        }
-      },
-      {
-        "base_stat": 49,
-        "effort": 0,
-        "stat": {
-          "name": "defense",
-          "url": "https://pokeapi.co/api/v2/stat/3/"
-        }
-      },
-      {
-        "base_stat": 65,
-        "effort": 1,
-        "stat": {
-          "name": "special-attack",
-          "url": "https://pokeapi.co/api/v2/stat/4/"
-        }
-      },
-      {
-        "base_stat": 65,
-        "effort": 0,
-        "stat": {
-          "name": "special-defense",
-          "url": "https://pokeapi.co/api/v2/stat/5/"
-        }
-      },
-      {
-        "base_stat": 45,
-        "effort": 0,
-        "stat": {
-          "name": "speed",
-          "url": "https://pokeapi.co/api/v2/stat/6/"
-        }
-      }
-    ],
-    "height": 7,
-    "weight": 69,
-  }
-  for (let i = 0; i < 1; i++) {
-    const pokemon = new PokeCard(bulbasaur, state.settings)
-    const pokemonCard = pokemon.create()
-    pokemonCard.addEventListener("dblclick", () => {
-      const isInHand = localState.cardArray.hand.some(card => card.id === pokemonCard.id)
-      if (!isInHand) {
-        const index = localState.cardArray.toShow.findIndex(objeto => objeto.id === pokemonCard.id);
-        if (index !== -1) {
-          const selectedCard = localState.cardArray.toShow.splice(index, 1)[0];
-          localState.cardArray.hand.push(selectedCard);
-        }
-      } else {
-        const index = localState.cardArray.hand.findIndex(objeto => objeto.id === pokemonCard.id);
-        if (index !== -1) {
-          const selectedCard = localState.cardArray.hand.splice(index, 1)[0];
-          localState.cardArray.toShow.push(selectedCard);
-        }
-      }
-      cardAreaObj.update(localState.cardArray.toShow, localState.cardArray.toShow.length);
-      handCardsObj.update(localState.cardArray.hand)
-    })
-    localState.cardArray.memory.push(pokemonCard);
-  }
-
-  const cardAreaObj = new CardArea(localState.cardArray.toShow);
-  const cardArea = cardAreaObj.create();
-  cardArea.style.height = `calc(100% - 44px - 40px - 32px - ${state.settings.card.sizes[state.settings.card.sizeSelected].height}px - 5px - 12px)`
+  const searchArea =  createSearchArea();
+  deckPage.appendChild(searchArea);
+  
+  localState.instances.cardArea = new CardArea(localState.cardArray.toShow.slice(0, localState.card.limit));
+  const cardArea = localState.instances.cardArea.create();
+  cardArea.style.height = `calc(100% - ${state.settings.card.options[state.settings.card.optionSelected].height}px - 44px - 40px - 32px - 5px - 12px - 10px)`;
   deckPage.appendChild(cardArea);
-
-  const pageMenu = new PageMenu(localState.pagesMenu.toShow);
-  deckPage.appendChild(pageMenu.create());
-
-  const handCardsObj = new HandCards()
-  const onHandCardsArea = handCardsObj.create(localState.cardArray.hand, state)
   
-  deckPage.appendChild(onHandCardsArea)
+  localState.instances.pageMenu = new PageMenu(localState.pagesMenu.toShow);
+  deckPage.appendChild(localState.instances.pageMenu.create());
   
-  const resizeObserver = new ResizeObserver(entries => {
+  localState.instances.handCards = new HandCards();
+  const onHandCardsArea = localState.instances.handCards.create(localState.cardArray.hand, state);
+  deckPage.appendChild(onHandCardsArea);
+  
+  const resizeObserver = new ResizeObserver(async entries => {
     for (let entry of entries) {
       const maxChildrens = localState.card.limit;
       setElementWidth(entry);
-
-      localState.grid.columns = cardAreaObj.getColumnsNumber(localState.cardArea.width, state.settings.card.sizes[state.settings.card.sizeSelected].width);
-
+      
+      localState.grid.columns = localState.instances.cardArea.getColumnsNumber(localState.cardArea.width, state.settings.card.options[state.settings.card.optionSelected].width);
+      
       const style = window.getComputedStyle(entry.target);
       if (style) {
         setElementMaxWidth(entry);
-
-        localState.grid.rows = cardAreaObj.getRowsNumber(localState.cardArea.maxHeight, state.settings.card.sizes[state.settings.card.sizeSelected].height);
+        
+        localState.grid.rows = localState.instances.cardArea.getRowsNumber(localState.cardArea.maxHeight, state.settings.card.options[state.settings.card.optionSelected].height);
       }
-
-      localState.card.limit = cardAreaObj.getMaxChildrens(localState.grid.columns, localState.grid.rows);
+      
+      localState.card.limit = localState.instances.cardArea.getMaxChildrens(localState.grid.columns, localState.grid.rows);
       
       if (localState.card.limit !== maxChildrens) {
-        cardAreaObj.setGridTemplateStyle(localState.grid.columns, localState.grid.rows)
-
-        localState.page.total = cardAreaObj.setPagesNumber(localState.cardArray.memory, localState.card.limit);
-
-        updateAllContent(cardAreaObj, pageMenu);
+        localState.instances.cardArea.setGridTemplateStyle(localState.grid.columns, localState.grid.rows)
+        
+        localState.page.total = localState.instances.cardArea.setPagesNumber(localState.cardArray.toShow, localState.card.limit);
+        
+        await setHandCards();
+        await setAreaCards();
+        updateAllContent();
       }
     }
   });
   resizeObserver.observe(cardArea)
 }
 
-function updateAllContent(cardAreaObj, pageMenu) {
-  localState.cardArray.toShow = cardAreaObj.getItemsToShow(localState.page.current, localState.card.limit, localState.cardArray.memory);
+async function setHandCards() {
+  for (const card of state.user.cards.hand) {
+    const storedCard = localState.cardArray.memory.find(item => Number(item.id) === Number(card.id));
+    if (storedCard) {
+      const onHandCard = localState.cardArray.hand.find(item => Number(item.id) === Number(storedCard.id))
+      if (!onHandCard) {
+        localState.cardArray.hand.push(storedCard);
+      }
+    } else {
+      const pokeCardObj = new PokeCard(card.id, state.settings);
+      const pokeCard = await pokeCardObj.create();
+      pokeCard.addEventListener("dblclick", () => {
+        handleCardToHand(card);
+      });
+      const onHandCard = localState.cardArray.hand.find(item => Number(item.id) === Number(pokeCard.id))
+      if (!onHandCard) {
+        localState.cardArray.hand.push(pokeCard);
+      }
+      localState.cardArray.memory.push(pokeCard);
+    }
+  }
+}
 
-  cardAreaObj.update(localState.cardArray.toShow, localState.cardArray.toShow.length);
+async function setAreaCards() {
+  const auxArray = []
+  for (const card of state.user.cards.all) {
+    if (!localState.cardArray.hand.some(item => Number(item.id) === card.id)) {
+      auxArray.push(card)
+    }
+  }
+  for (const card of auxArray) {
+    const storedCard = localState.cardArray.memory.find(item => Number(item.id) === Number(card.id));
+    if (storedCard) {
+      const onHandCard = localState.cardArray.toShow.find(item => Number(item.id) === Number(storedCard.id))
+      if (!onHandCard) {
+        localState.cardArray.toShow.push(storedCard);
+      }
+    } else {
+      const pokeCardObj = new PokeCard(card.id, state.settings);
+      const pokeCard = await pokeCardObj.create();
+      pokeCard.addEventListener("dblclick", () => {
+        handleCardToHand(card);
+      });
+      const toShowCard = localState.cardArray.toShow.find(item => Number(item.id) === Number(pokeCard.id))
+      if (!toShowCard) {
+        localState.cardArray.toShow.push(pokeCard);
+      }
+      localState.cardArray.memory.push(pokeCard);
+    }
+  }
+}
 
-  localState.pagesMenu.button.limit = pageMenu.setPagesMenuButtons(localState.cardArea.width, localState.pagesMenu.button.width, localState.pagesMenu.gap.row);
-  
-  localState.pagesMenu.toShow = pageMenu.setRangeOfButtons(localState.page.total, localState.pagesMenu.button.limit, localState.page.current);
+function handleCardToHand(pokeId) {
+  const isInHand = localState.cardArray.hand.some(card => Number(card.id) === pokeId.id);
+  if (isInHand) {
+    const index = localState.cardArray.hand.findIndex(card => Number(card.id) === pokeId.id);
+    console.log(index)
+    if (index !== -1) {
+      const selectedCard = localState.cardArray.hand.splice(index, 1)[0]
+      localState.cardArray.toShow.push(selectedCard);
+    }
+  } else {
+    if (localState.cardArray.hand.length < 6) {
+      const index = localState.cardArray.toShow.findIndex(card => Number(card.id) === pokeId.id);
+      console.log(index)
+      if (index !== -1) {
+        const selectedCard = localState.cardArray.toShow.splice(index, 1)[0];
+        localState.cardArray.hand.push(selectedCard);
+      }
+    }
+  }
+  localState.instances.cardArea.update(localState.instances.cardArea.getItemsToShow(localState.page.current, localState.card.limit, localState.cardArray.toShow), localState.card.limit);
+  localState.instances.handCards.update(localState.cardArray.hand);
+}
 
-  pageMenu.update(localState.pagesMenu.toShow, localState.page.current);
+async function updateAllContent() {
+  localState.instances.cardArea.update(localState.instances.cardArea.getItemsToShow(localState.page.current, localState.card.limit, localState.cardArray.toShow), localState.card.limit);
+
+  localState.pagesMenu.button.limit = localState.instances.pageMenu.setPagesMenuButtons(localState.cardArea.width, localState.pagesMenu.button.width, localState.pagesMenu.gap.row);
+
+  localState.pagesMenu.toShow = localState.instances.pageMenu.setRangeOfButtons(localState.page.total, localState.pagesMenu.button.limit, localState.page.current);
+
+  localState.instances.pageMenu.update(localState.pagesMenu.toShow, localState.page.current);
 
   const previousPageButton = document.querySelector(".previous_page_menu_button");
   previousPageButton.disabled = (localState.page.current <= 1)
   if (localState.page.current > 1) {
     previousPageButton.addEventListener("click", () => {
       localState.page.current = localState.page.current - 1 >= 1 ? localState.page.current - 1 : 1;
-      updateAllContent(cardAreaObj, pageMenu)
+      updateAllContent()
     })
   }
-  addEventListenerToPageMenuButtons(cardAreaObj, pageMenu);
+  addEventListenerToPageMenuButtons(localState.instances.cardArea, );
   const nextPageButton = document.querySelector(".next_page_menu_button");
   nextPageButton.disabled = (localState.page.current <= 1)
   if (localState.page.current < localState.page.total) {
     nextPageButton.addEventListener("click", () => {
       localState.page.current = localState.page.current + 1 <= localState.page.total ? localState.page.current + 1 : localState.page.total;
-      updateAllContent(cardAreaObj, pageMenu)
+      updateAllContent()
     })
   }
 }
@@ -243,12 +218,12 @@ function setElementMaxWidth(element) {
   localState.cardArea.maxHeight = element.contentRect.height;
 }
 
-function addEventListenerToPageMenuButtons(cardAreaObj, pageMenu) {
+function addEventListenerToPageMenuButtons(pageMenu) {
   const pageButtons = document.querySelectorAll(".page_menu_button");
   pageButtons.forEach(button => {
     button.addEventListener("click", () => {
       localState.page.current = button.id;
-      updateAllContent(cardAreaObj, pageMenu)
+      updateAllContent(localState.instances.cardArea, pageMenu)
     });
   });
 }
