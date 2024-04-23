@@ -1,0 +1,62 @@
+.input_area > .option_area {
+  width: 100%;
+  max-width: none;
+
+  text-transform: uppercase;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.input_area > .option_area > span {
+  width: 40%;
+
+  text-align: end;
+}
+.input_area > .option_area .option_dropdown {
+  padding: 2px;
+  margin: 5px 10px;
+
+  min-width: 100px;
+  width: 50%;
+  max-width: 250px;
+
+  background-color: #e8e8e8;
+
+  text-align: center;
+
+  position: relative;
+}
+
+.option_dropdown > .selected_option {
+  padding: 5px 2px;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #e8e8e8;
+
+  cursor: pointer;
+}
+.option_dropdown > .options {
+  padding: 5px 2px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+
+  background-color: #e8e8e8;
+
+  position: absolute;
+  top: 100%;
+  left: 0px;
+  z-index: 3;
+}
+.option_dropdown > .options.hide {
+  display: none;
+}
