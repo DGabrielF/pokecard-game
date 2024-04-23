@@ -16,7 +16,7 @@ PokeApi.getPokemon = async (idOrName) => {
   }
 }
 
-PokeApi.getPokemons = async (offset = 0, limit = 10) => {
+PokeApi.getPokemonSerie = async (offset = 0, limit = 10) => {
   const url = `${PokeApi.BASE_URL}?offset=${offset}&limit=${limit}`;
   try {
     const response = await fetch(url);

@@ -1,6 +1,7 @@
 import { Fade } from "../components/fade/fade.js";
 import { deck } from "../pages/deck/deck.js";
 import { pokedex } from "../pages/pokedex/pokedex.js";
+import { settings } from "../pages/settings/settings.js";
 import { shop } from "../pages/shop/shop.js";
 import { signin } from "../pages/signin/signin.js";
 import { signup } from "../pages/signup/signup.js";
@@ -12,15 +13,37 @@ export const state = {
     coins: 10000,
     luck: 0,
     friends: [],
-    cards: [
-      {id: 25, quantity: 1},
-      {id: 1, quantity: 1},
-      {id: 4, quantity: 1},
-      {id: 5, quantity: 1},
-      {id: 12, quantity: 1},
-      {id: 16, quantity: 1}
-    ],
-    hand: [25, 1, 4, 7, 12, 16],
+    cards: {
+      all: [
+        {id: 25, quantity: 1},
+        {id: 1, quantity: 1},
+        {id: 4, quantity: 1},
+        {id: 7, quantity: 1},
+        {id: 12, quantity: 1},
+        {id: 11, quantity: 1},
+        {id: 112, quantity: 1},
+        {id: 23, quantity: 1},
+        {id: 16, quantity: 1},
+        {id: 86, quantity: 1},
+        {id: 76, quantity: 1},
+        {id: 66, quantity: 1},
+        {id: 36, quantity: 1},
+        {id: 56, quantity: 1},
+        {id: 66, quantity: 1},
+        {id: 176, quantity: 1},
+        {id: 116, quantity: 1},
+        {id: 168, quantity: 1},
+        {id: 17, quantity: 1},
+      ],
+      hand: [
+        {id: 25},
+        {id: 1},
+        {id: 4},
+        {id: 7},
+        {id: 12},
+        {id: 16},
+      ],      
+    },
     stats:[
       {
         wins: 0,
@@ -53,6 +76,10 @@ export const state = {
       {
         name: "pokedex",
         function: pokedex,
+      },
+      {
+        name: "settings",
+        function: settings,
       }
     ]
   },
@@ -140,9 +167,11 @@ export const state = {
   },
   settings: {
     card: {
-      sizeSelected: "small",
-      sizes: {
+      name: "Tamanho das cartas",
+      optionSelected: "small",
+      options: {
         xSmall: {
+          name: "muito pequenas",
           width: 69,
           height: 99,
           padding: 2,
@@ -160,6 +189,7 @@ export const state = {
           }
         },
         small: {
+          name: "pequenas",
           width: 103,
           height: 145,
           padding: 3,
@@ -177,6 +207,7 @@ export const state = {
           },
         },
         medium: {
+          name: "médias",
           width: 133,
           height: 191,
           padding: 4,
@@ -194,6 +225,7 @@ export const state = {
           },
         },
         large: {
+          name: "grandes",
           width: 150,
           height: 220,
           padding: 5,
@@ -211,6 +243,7 @@ export const state = {
           }
         },
         xLarge: {
+          name: "muito grandes",
           width: 170,
           height: 250,
           padding: 5,
@@ -228,7 +261,182 @@ export const state = {
           }
         },
       }
+    },
+    sound: {
+      name: "Som",
+      optionSelected: "off",
+      options: {
+        off: {
+          name: "desligado",
+          value: false
+        },
+        on: {
+          name: "ligado",
+          value: true
+        }
+      }
     }
   },
-  localMemory: []
+  localMemory: {
+    loadedCards: [
+
+    ]
+  },
+  test: {
+    pokemons: [
+      {
+        id: 1,
+        name: "bulbasaur",
+        "types": [
+          {
+            "slot": 1,
+            "type": {
+              "name": "grass",
+              "url": "https://pokeapi.co/api/v2/type/12/"
+            }
+          },
+          {
+            "slot": 2,
+            "type": {
+              "name": "poison",
+              "url": "https://pokeapi.co/api/v2/type/4/"
+            }
+          }
+        ],
+        sprites: {
+          other: {
+            dream_world:{
+              front_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
+            }
+          },
+          front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg",
+        },
+        stats: [
+          {
+            "base_stat": 45,
+            "effort": 0,
+            "stat": {
+              "name": "hp",
+              "url": "https://pokeapi.co/api/v2/stat/1/"
+            }
+          },
+          {
+            "base_stat": 49,
+            "effort": 0,
+            "stat": {
+              "name": "attack",
+              "url": "https://pokeapi.co/api/v2/stat/2/"
+            }
+          },
+          {
+            "base_stat": 49,
+            "effort": 0,
+            "stat": {
+              "name": "defense",
+              "url": "https://pokeapi.co/api/v2/stat/3/"
+            }
+          },
+          {
+            "base_stat": 65,
+            "effort": 1,
+            "stat": {
+              "name": "special-attack",
+              "url": "https://pokeapi.co/api/v2/stat/4/"
+            }
+          },
+          {
+            "base_stat": 65,
+            "effort": 0,
+            "stat": {
+              "name": "special-defense",
+              "url": "https://pokeapi.co/api/v2/stat/5/"
+            }
+          },
+          {
+            "base_stat": 45,
+            "effort": 0,
+            "stat": {
+              "name": "speed",
+              "url": "https://pokeapi.co/api/v2/stat/6/"
+            }
+          }
+        ],
+        "height": 7,
+        "weight": 69,
+      },
+      {
+        id: 4,
+        name: "charmander",
+        "types": [
+          {
+            "slot": 1,
+            "type": {
+              "name": "fire",
+              "url": "https://pokeapi.co/api/v2/type/12/"
+            }
+          }
+        ],
+        sprites: {
+          other: {
+            dream_world:{
+              front_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
+            }
+          },
+          front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg",
+        },
+        stats: [
+          {
+            "base_stat": 45,
+            "effort": 0,
+            "stat": {
+              "name": "hp",
+              "url": "https://pokeapi.co/api/v2/stat/1/"
+            }
+          },
+          {
+            "base_stat": 49,
+            "effort": 0,
+            "stat": {
+              "name": "attack",
+              "url": "https://pokeapi.co/api/v2/stat/2/"
+            }
+          },
+          {
+            "base_stat": 49,
+            "effort": 0,
+            "stat": {
+              "name": "defense",
+              "url": "https://pokeapi.co/api/v2/stat/3/"
+            }
+          },
+          {
+            "base_stat": 65,
+            "effort": 1,
+            "stat": {
+              "name": "special-attack",
+              "url": "https://pokeapi.co/api/v2/stat/4/"
+            }
+          },
+          {
+            "base_stat": 65,
+            "effort": 0,
+            "stat": {
+              "name": "special-defense",
+              "url": "https://pokeapi.co/api/v2/stat/5/"
+            }
+          },
+          {
+            "base_stat": 45,
+            "effort": 0,
+            "stat": {
+              "name": "speed",
+              "url": "https://pokeapi.co/api/v2/stat/6/"
+            }
+          }
+        ],
+        "height": 7,
+        "weight": 69,
+      }
+    ]
+  }
 }
