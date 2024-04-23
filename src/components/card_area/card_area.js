@@ -4,7 +4,6 @@ export class CardArea{
   constructor(elementsArray) {
     this.elementsArray = elementsArray;
     this.cardArea = document.createElement("div");
-    this.cardLimit = 1;
   }
 
   create() {
@@ -20,11 +19,11 @@ export class CardArea{
   }
 
   getColumnsNumber(cardAreaWidth, cardSizeSelectedWidth) {
-    return Math.floor(cardAreaWidth / cardSizeSelectedWidth)
+    return Math.floor(cardAreaWidth / (cardSizeSelectedWidth + 10))
   }
 
   getRowsNumber(cardAreaHeight, cardSizeSelectedHeight) {
-    return Math.floor(cardAreaHeight / cardSizeSelectedHeight)
+    return Math.floor(cardAreaHeight / (cardSizeSelectedHeight + 10))
   }
 
   getMaxChildrens(columns, rows) {
