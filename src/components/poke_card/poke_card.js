@@ -1,32 +1,21 @@
+import { PokeApi } from "../../services/api.js";
 import { cardColors } from "./styling_card.js";
 
 export class PokeCard{
-  constructor(poke, settings) {
-    this.id = poke.id;
-    this.name = poke.name;
-    this.types = poke.types;
-    this.height = poke.height;
-    this.weight = poke.weight;
-    this.image = poke.sprites.other.dream_world.front_default ? poke.sprites.other.dream_world.front_default : poke.sprites.front_default;
-    this.health = poke.stats.find((item) => item.stat.name === "hp").base_stat || 0;
-    this.speed = poke.stats.find((item) => item.stat.name === "speed").base_stat || 0;
-    this.attack = poke.stats.find((item) => item.stat.name === "attack").base_stat || 0;
-    this.defense = poke.stats.find((item) => item.stat.name === "defense").base_stat || 0;
+  constructor(pokeId, settings) {
+    this.id = (typeof pokeId === "number") ? pokeId : pokeId.id;
     this.settings = settings.card;
     this.selectedSet = "";
   }
 
-  create() {
+  async create() {
+    const pokeData = await PokeApi.getPokemon(this.id)
+    this._getPokeAttributesFromData(pokeData);
+    
     const card = document.createElement("div");
     card.id = this.id;
     card.classList.add("poke_card");
-
-    this.selectedSet = this.settings.sizes[this.settings.sizeSelected]
-    card.style.minWidth = `${this.selectedSet.width}px`;
-    card.style.width = `${this.selectedSet.width}px`;
-    card.style.minHeight = `${this.selectedSet.height}px`;
-    card.style.height = `${this.selectedSet.height}px`;
-    card.style.padding = `${this.selectedSet.padding}px`;
+    this._addCardStyle(card);
 
     const name = this._addName();
     card.appendChild(name);
@@ -54,6 +43,27 @@ export class PokeCard{
     card.appendChild(attributesBox)
 
     return card
+  }
+
+  _addCardStyle(card) {
+    this.selectedSet = this.settings.options[this.settings.optionSelected];
+    card.style.minWidth = `${this.selectedSet.width}px`;
+    card.style.width = `${this.selectedSet.width}px`;
+    card.style.minHeight = `${this.selectedSet.height}px`;
+    card.style.height = `${this.selectedSet.height}px`;
+    card.style.padding = `${this.selectedSet.padding}px`;
+  }
+
+  _getPokeAttributesFromData(pokeData) {
+    this.name = pokeData.name;
+    this.types = pokeData.types;
+    this.height = pokeData.height;
+    this.weight = pokeData.weight;
+    this.image = pokeData.sprites.other.dream_world.front_default ? pokeData.sprites.other.dream_world.front_default : pokeData.sprites.front_default;
+    this.health = pokeData.stats.find((item) => item.stat.name === "hp").base_stat || 0;
+    this.speed = pokeData.stats.find((item) => item.stat.name === "speed").base_stat || 0;
+    this.attack = pokeData.stats.find((item) => item.stat.name === "attack").base_stat || 0;
+    this.defense = pokeData.stats.find((item) => item.stat.name === "defense").base_stat || 0;
   }
 
   _addName() {
