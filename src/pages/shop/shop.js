@@ -45,7 +45,6 @@ const localState = {
         offerType: "vende",
         createdAt: new Date("2024-04-19"),
         expireIn: new Date("2024-05-19"),
-        sellItAnyWay: true,
       },
     ],
     sell: [
@@ -56,7 +55,8 @@ const localState = {
         price: 185,
         offerType: "compra",
         createdAt: new Date("2024-04-19"),
-        expireIn: new Date("2024-05-19")
+        expireIn: new Date("2024-05-19"),
+        sellItAnyWay: true,
       },
     ],
     trade: [

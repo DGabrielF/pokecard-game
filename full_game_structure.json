@@ -1,0 +1,1442 @@
+{
+  "features": {
+    "cadastro": {
+      "email": {
+        "inputs": [
+          {
+            "name": "nome de usuario",
+            "status": false
+          },
+          {
+            "name": "email",
+            "status": false
+          },
+          {
+            "name": "senha",
+            "status": false
+          },
+          {
+            "name": "confirmar senha",
+            "status": false
+          },
+          {
+            "name": "botão de cadastrar",
+            "status": false
+          },
+          {
+            "name": "botão de ir para o login",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "verificar se o nome do usuário está disponível",
+            "status": false
+          },
+          {
+            "name": "verificar se a senha atende as condições",
+            "status": false
+          },
+          {
+            "name": "verificar se o confirmar senha corresponde a senha",
+            "status": false
+          },
+          {
+            "name": "verificar se o email é válido",
+            "status": false
+          },
+          {
+            "name": "verificar se o email já está cadastrado",
+            "status": false
+          },
+          {
+            "name": "criar um registro no banco de dados de usuários",
+            "status": false
+          },
+          {
+            "name": "criar um registro no banco de dados geral",
+            "status": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "Conta criada",
+            "status": false
+          },
+          {
+            "name": "mensagem de erro (quais verificações falharam)",
+            "status": false
+          }
+        ]          
+      },
+      "google": {
+        "inputs": [
+          {
+            "name": "botão de logar com conta google",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "usar a função do firebase para cadastrar o usuário",
+            "status": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "conta criada",
+            "status": false
+          },
+          {
+            "name": "mensagem de erro (quais verificações falharam)",
+            "status": false
+          }
+        ]
+      }
+    },
+    "entrar": {
+      "email": {
+        "inputs": [
+          {
+            "name": "email",
+            "status": false
+          },
+          {
+            "name": "senha",
+            "status": false
+          },
+          {
+            "name": "botão de entrar",
+            "status": false
+          },
+          {
+            "name": "botão de ir para o cadastro",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "usar a função do firebase para checar o login por email e senha",
+            "status": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "conexão realizada com sucesso",
+            "status": false
+          },
+          {
+            "name": "mensagem de erro (quais verificações falharam)",
+            "status": false
+          }
+        ]
+      },
+      "google": {
+        "inputs": [
+          {
+            "name": "botão de entrar via google",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "usar a função do firebase para checar o login por conta google",
+            "status": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "conexão realizada com sucesso",
+            "status": false
+          },
+          {
+            "name": "mensagem de erro (quais verificações falharam)",
+            "status": false
+          }
+        ]
+      }
+    },
+    "mercado": {
+      "oferta":{
+        "inputs": [
+          {
+            "name": "tipo de operação",
+            "status": false
+          },
+          {
+            "name": "pokemons desejados",
+            "status": false
+          },
+          {
+            "name": "pokemons oferecidos",
+            "status": false
+          },
+          {
+            "name": "valor",
+            "status": false
+          },
+          {
+            "name": "botão criar oferta",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "identificar o banco de dados para armazenar a transação",
+            "status": false
+          },
+          {
+            "name": "criar o registro da transação no banco de dados",
+            "status": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "apresentar o sucesso da criação",
+            "status": false
+          },
+          {
+            "name": "mensagem de erro",
+            "status": false
+          }
+        ]
+      },
+      "pacotes": {
+        "inputs": [
+          {
+            "name": "botão selecionar o pacote desejado",
+            "status": false
+          },
+          {
+            "name": "botão confirmar a compra",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "verificar se há saldo suficiente na conta do usuário",
+            "status": false
+          },
+          {
+            "name": "remover o valor da conta do usuário",
+            "status": false
+          },
+          {
+            "name": "gerar as cartas de pokemons",
+            "status": false
+          },
+          {
+            "name": "verificação de poder e sorte",
+            "status": false
+          },
+          {
+            "name": "adicionar as cartas compradas à coleção do usuário",
+            "status": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "apresentar cartas adquiridas",
+            "status": false
+          },
+          {
+            "name": "mensagem de erro",
+            "status": false
+          }
+        ]
+      },
+      "comprar": {
+        "inputs": [
+          {
+            "name": "botão selecionar a oferta desejado",
+            "status": false
+          },
+          {
+            "name": "botão confirmar a compra",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "verificar se há saldo suficiente na conta do usuário",
+            "status": false
+          },
+          {
+            "name": "remover o valor da conta do usuário",
+            "status": false
+          },
+          {
+            "name": "adicionar o valor da conta do usuário que criou a oferta",
+            "status": false
+          },
+          {
+            "name": "adicionar a carta comprada à coleção do usuário",
+            "status": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "apresenta a carta adquirida",
+            "status": false
+          },
+          {
+            "name": "mensagem de erro",
+            "status": false
+          }
+        ]
+      },
+      "vender": {
+        "inputs": [
+          {
+            "name": "botão selecionar a oferta desejado",
+            "status": false
+          },
+          {
+            "name": "botão confirmar a venda",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "verificar se há cartas suficiente na coleção do usuário",
+            "status": false
+          },
+          {
+            "name": "remover a carta da coleção do usuário",
+            "status": false
+          },
+          {
+            "name": "adicionar a carta comprada à coleção do usuário que criou a oferta",
+            "status": false
+          },
+          {
+            "name": "adicionar o valor da conta do usuário",
+            "status": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "apresenta o valor adquirido",
+            "status": false
+          },
+          {
+            "name": "mensagem de erro",
+            "status": false
+          }
+        ]
+      },
+      "trocar": {
+        "inputs": [
+          {
+            "name": "botão selecionar a oferta desejado",
+            "status": false
+          },
+          {
+            "name": "botão confirmar a troca",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "verificar se há cartas suficiente na coleção do usuário",
+            "status": false
+          },
+          {
+            "name": "remover a carta da coleção do usuário",
+            "status": false
+          },
+          {
+            "name": "adicionar a carta comprada à coleção do usuário que criou a oferta",
+            "status": false
+          }          
+        ],
+        "outputs": [
+          {
+            "name": "apresentar cartas adquiridas",
+            "status": false
+          },
+          {
+            "name": "mensagem de erro",
+            "status": false
+          }
+        ]
+      }
+    },
+    "pokedex": {
+      "inputs": [
+        {
+          "name": "buscar por nome ou id",
+          "status": false
+        },
+        {
+          "name": "botões para mudar páginas",
+          "status": false
+        }
+      ],
+      "process": [
+        {
+          "name": "pegar as dimensões da tela de apresentação",
+          "status": false
+        },
+        {
+          "name": "calcular a quantidade de cartas que podem ser apresentadas",
+          "status": false
+        },
+        {
+          "name": "criar uma lista de cartas com base na página e na quantidade de cartas",
+          "status": false
+        },
+        {
+          "name": "verificar se a carta já foi vista",
+          "status": false
+        },
+        {
+          "name": "verificar se a carta já está na coleção do usuário",
+          "status": false
+        },
+        {
+          "name": "adicionar a opção de ver detalhe",
+          "status": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "apresentar a lista de cartas",
+          "status": false
+        },
+        {
+          "name": "adicionar estilo para cartas nunca vistas",
+          "status": false
+        },
+        {
+          "name": "adicionar estilo para cartas vistas",
+          "status": false
+        },
+        {
+          "name": "adicionar estilo para cartas da coleção",
+          "status": false
+        }
+      ]
+    },
+    "deck": {
+      "inputs": [
+        {
+          "name": "clicar duas para adicionar ou remover cartas do deck",
+          "status": false
+        },
+        {
+          "name": "arrastar para adicionar ou remover cartas do deck",
+          "status": false
+        }
+      ],
+      "process": [
+        {
+          "name": "pegar as dimensões da tela de apresentação",
+          "status": false
+        },
+        {
+          "name": "calcular a quantidade de cartas que podem ser apresentadas",
+          "status": false
+        },
+        {
+          "name": "criar uma lista de cartas com base na página e na quantidade de cartas",
+          "status": false
+        },
+        {
+          "name": "remover cartas da lista de cartas para visualização",
+          "status": false
+        },
+        {
+          "name": "adicionar cartas da lista de cartas para visualização",
+          "status": false
+        },
+        {
+          "name": "remover cartas da lista de cartas selecionadas",
+          "status": false
+        },
+        {
+          "name": "adicionar cartas da lista de cartas selecionadas",
+          "status": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "remover cartas da área de cartas para visualização",
+          "status": false
+        },
+        {
+          "name": "adicionar cartas da área de cartas para visualização",
+          "status": false
+        },
+        {
+          "name": "remover cartas da área de cartas selecionadas",
+          "status": false
+        },
+        {
+          "name": "adicionar cartas da área de cartas selecionadas",
+          "status": false
+        }
+      ]
+    },
+    "duelo": {
+      "buscar": {
+        "inputs": [
+          {
+            "name": "botão de duelar",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "carregar os dados do adversário",
+            "status": false
+          },
+          {
+            "name": "criar uma sala de duelo no banco de dados",
+            "status": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "página de duelo",
+            "status": false
+          },
+          {
+            "name": "erro de carregamento",
+            "status": false
+          }
+        ]
+      },
+      "duelar": {
+        "inputs": [
+          {
+            "name": "selecionar atributo para duelar",
+            "status": false
+          },
+          {
+            "name": "selecionar carta para duelar",
+            "status": false
+          },
+          {
+            "name": "botão para confirmar escolha",
+            "status": false
+          },
+          {
+            "name": "botão para desistir",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "apresentar cartas do usuário",
+            "status": false
+          },
+          {
+            "name": "apresentar cartas do adversário",
+            "status": false
+          },
+          {
+            "name": "adicionar carta à área de duelo",
+            "status": false
+          },
+          {
+            "name": "adicionar atributo ao duelo",
+            "status": false
+          },
+          {
+            "name": "iniciar a comparação",
+            "status": false
+          },
+          {
+            "name": "alterar o placar",
+            "status": false
+          },
+          {
+            "name": "verificar critério para término de duelo",
+            "status": false
+          },
+          {
+            "name": "atribuir um vencedos",
+            "status": false
+          },
+          {
+            "name": "atualizar as estatísticas no banco de dados",
+            "status": false
+          },
+          {
+            "name": "gerar moedas por duelo para os participantes",
+            "status": false
+          }          
+        ],
+        "outputs": [
+          {
+            "name": "Apresentar cartas",
+            "status": false
+          },
+          {
+            "name": "Apresentar carta selecionada para duelo",
+            "status": false
+          },
+          {
+            "name": "Apresentar resultado de cada comparação",
+            "status": false
+          },
+          {
+            "name": "Apresentar placar",
+            "status": false
+          },
+          {
+            "name": "Apresentar resultado final com status, placar, dinheiro ganho",
+            "status": false
+          }
+        ]
+      }
+    },
+    "estatisticas": {
+      "duelos": {
+        "input": [
+          {
+            "name": "filtrar por: ['número de vitórias', 'aproveitamento', 'partidas jogadas']",
+            "status": false
+          },
+          {
+            "name": "botões de paginação",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "pegar as dimensões da tela de apresentação",
+            "status": false
+          },
+          {
+            "name": "calcular a quantidade de jogadores que podem ser apresentadas",
+            "status": false
+          },
+          {
+            "name": "criar uma lista de jogadores com base na página e na quantidade de jogadores",
+            "status": false
+          },
+          {
+            "name": "buscar pelas estatísticas dos jogadores",
+            "status": false
+          },
+          {
+            "name": "retornar apenas o resultado por páginas",
+            "status": false
+          },
+          {
+            "name": "retornar a posição do jogador que está procurando",
+            "status": false
+          },
+          {
+            "name": "sistema de paginação",
+            "status": false
+          }          
+        ],
+        "outputs": [
+          {
+            "name": "apresentar a lista para a página atual",
+            "status": false
+          },
+          {
+            "name": "destacar o usuário quanto ele estiver na lista",
+            "status": false
+          },
+          {
+            "name": "deixar fixada a posição do usuário no topo",
+            "status": false
+          }          
+        ]
+      },
+      "cartas": {
+        "input": [
+          {
+            "name": "filtrar por: ['quantidade de cartas', 'quantidade de cartas diferentes']",
+            "status": false
+          },
+          {
+            "name": "botões de paginação",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "pegar as dimensões da tela de apresentação",
+            "status": false
+          },
+          {
+            "name": "calcular a quantidade de jogadores que podem ser apresentadas",
+            "status": false
+          },
+          {
+            "name": "criar uma lista de jogadores com base na página e na quantidade de jogadores",
+            "status": false
+          },
+          {
+            "name": "buscar pelas estatísticas dos jogadores",
+            "status": false
+          },
+          {
+            "name": "retornar apenas o resultado por páginas",
+            "status": false
+          },
+          {
+            "name": "retornar a posição do jogador que está procurando",
+            "status": false
+          },
+          {
+            "name": "sistema de paginação",
+            "status": false
+          }          
+        ],
+        "outputs": [
+          {
+            "name": "apresentar a lista para a página atual",
+            "status": false
+          },
+          {
+            "name": "destacar o usuário quanto ele estiver na lista",
+            "status": false
+          },
+          {
+            "name": "deixar fixada a posição do usuário no topo",
+            "status": false
+          }          
+        ]
+      }
+    }
+  },
+  "services": {
+    "views": {
+      "injetarFilhos": {
+        "inputs": [
+          {
+            "name": "elemento pai",
+            "status": true
+          },
+          {
+            "name": "coleção de elementos filhos",
+            "status": true
+          },
+          {
+            "name": "quantidade máxima de elementos filhos",
+            "status": true
+          }        
+        ],
+        "process": [
+          {
+            "name": "para cada item da coleção ele injeta o elemento filho no elemento pai",
+            "status": true
+          }
+        ],
+        "outputs": [
+          {
+            "name": "essa função não possui um retorno ou pode ser considerado o tipo Void",
+            "status": true
+          },
+          {
+            "name": "itens inseridos no elemento pai",
+            "status": true
+          }
+        ]
+      },
+      "limpaSeção": {
+        "inputs": [],
+        "process": [
+          {
+            "name": "encontra o elemento body",
+            "status": true
+          },
+          {
+            "name": "dentro do body remove a seção que encontrar",
+            "status": true
+          }
+        ],
+        "outputs": [
+          {
+            "name": "essa função não possui um retorno ou pode ser considerado o tipo Void",
+            "status": true
+          },
+          {
+            "name": "itens removido no elemento 'body'",
+            "status": true
+          }
+        ]
+      },
+      "limpaElemento": {
+        "inputs": [
+          {
+            "name": "elemento a ter conteúdo removido",
+            "status": true
+          }
+        ],
+        "process": [
+          {
+            "name": "transforma o conteúdo HTML em uma string vazia",
+            "status": true
+          }
+        ],
+        "outputs": [
+          {
+            "name": "essa função não possui um retorno ou pode ser considerado o tipo Void",
+            "status": true
+          },
+          {
+            "name": "conteúdo removido do elemento",
+            "status": true
+          }
+        ]
+      }
+    },
+    "api": {
+      "inputs": [
+        {
+          "name": "pegar dados de um pokemon por id ou nome",
+          "status": false
+        },
+        {
+          "name": "pegar dados de uma série pokemon usando um offset e um limite para paginação",
+          "status": false
+        }
+      ],
+      "process": [
+        {
+          "name": "enviar uma requisição para a API",
+          "status": false
+        },
+        {
+          "name": "aguardar a resposta e verificar o status da requisição",
+          "status": false
+        },
+        {
+          "name": "converter os dados em um arquivo JSON",
+          "status": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "retornar os dados em JSON",
+          "status": false
+        },
+        {
+          "name": "retornar oerro",
+          "status": false
+        }
+      ]
+    },
+    "fireauth": {
+      "signup": {
+        "registrarComEmailESenha": {
+          "inputs": [
+            {
+              "name": "email",
+              "status": false
+            },
+            {
+              "name": "senha",
+              "status": false
+            }
+          ],
+          "process": [
+            {
+              "name": "conectar com a função do firebase authentication",
+              "status": false
+            },
+            {
+              "name": "criar um registro no banco de dados de usuários do firebase",
+              "status": false
+            }
+          ],
+          "outputs": [
+            {
+              "name": "retornar um usuário",
+              "status": false
+            },
+            {
+              "name": "retornar um erro de criação",
+              "status": false
+            }
+          ]
+        },
+        "registrarComEmaildaGoogle": {
+          "inputs": [
+            {
+              "name": "caixa de diálogo de confirmação",
+              "status": false
+            }
+          ],
+          "process": [
+            {
+              "name": "conectar com a função do firebase authentication",
+              "status": false
+            },
+            {
+              "name": "criar um registro no banco de dados de usuários do firebase",
+              "status": false
+            }
+          ],
+          "outputs": [
+            {
+              "name": "retornar um usuário",
+              "status": false
+            },
+            {
+              "name": "retornar um erro de criação",
+              "status": false
+            }
+          ]
+        }
+      },
+      "signin": {
+        "entrarComEmailESenha": {
+          "inputs": [
+            {
+              "name": "email",
+              "status": false
+            },
+            {
+              "name": "senha",
+              "status": false
+            }
+          ],
+          "process": [
+            {
+              "name": "conectar com a função do firebase authentication",
+              "status": false
+            }
+          ],
+          "outputs": [
+            {
+              "name": "retornar um usuário",
+              "status": false
+            },
+            {
+              "name": "retornar um erro de entrada",
+              "status": false
+            }
+          ]
+        },
+        "entrarComEmaildaGoogle": {
+          "inputs": [
+            {
+              "name": "caixa de diálogo de confirmação",
+              "status": false
+            }
+          ],
+          "process": [
+            {
+              "name": "conectar com a função do firebase authentication",
+              "status": false
+            }
+          ],
+          "outputs": [
+            {
+              "name": "retornar um usuário",
+              "status": false
+            },
+            {
+              "name": "retornar um erro de entrada",
+              "status": false
+            }
+          ]
+        }
+      }
+    },
+    "firestore": {
+      "create": {
+        "unico": {
+          "input": [
+            {
+              "name": "banco de dados",
+              "status": false
+            },
+            {
+              "name": "coleção",
+              "status": false
+            },
+            {
+              "name": "sub coleção",
+              "status": false
+            },
+            {
+              "name": "dados",
+              "status": false
+            }
+          ],
+          "process": [
+            {
+              "name": "inserir um conjunto de dados em um documento, com id aleatório, no caminho especificado",
+              "status": false
+            }
+          ],
+          "outputs": [
+            {
+              "name": "retornar o status da execução",
+              "status": false
+            }
+          ]
+        },
+        "multiplo": {
+          "input": [
+            {
+              "name": "banco de dados",
+              "status": false
+            },
+            {
+              "name": "coleção",
+              "status": false
+            },
+            {
+              "name": "sub coleção",
+              "status": false
+            },
+            {
+              "name": "lista com vários objetos",
+              "status": false
+            }
+          ],
+          "process": [
+            {
+              "name": "inserir um conjunto de objetos em documento separados, com id aleatório, no caminho especificado",
+              "status": false
+            }
+          ],
+          "outputs": [
+            {
+              "name": "retornar o status da execução",
+              "status": false
+            }
+          ]
+        }
+      },
+      "read": {
+        "unico": {
+          "input": [
+            {
+              "name": "banco de dados",
+              "status": false
+            },
+            {
+              "name": "coleção",
+              "status": false
+            },
+            {
+              "name": "sub coleção",
+              "status": false
+            },
+            {
+              "name": "id",
+              "status": false
+            }
+          ],
+          "process": [
+            {
+              "name": "pegar o documento que possui o id fornecido, no caminho especificado",
+              "status": false
+            }
+          ],
+          "outputs": [
+            {
+              "name": "retornar o status da execução",
+              "status": false
+            },
+            {
+              "name": "retornar os dados obtidos",
+              "status": false
+            }
+          ]
+        },
+        "tudo": {
+          "input": [
+            {
+              "name": "banco de dados",
+              "status": false
+            },
+            {
+              "name": "coleção",
+              "status": false
+            },
+            {
+              "name": "sub coleção",
+              "status": false
+            }
+          ],
+          "process": [
+            {
+              "name": "pegar todo o conjunto de dados na coleção com o caminho especificado",
+              "status": false
+            }
+          ],
+          "outputs": [
+            {
+              "name": "retornar o status da execução",
+              "status": false
+            },
+            {
+              "name": "retornar os dados obtidos",
+              "status": false
+            }
+          ]
+        },
+        "requisitos": {
+          "input": [
+            {
+              "name": "banco de dados",
+              "status": false
+            },
+            {
+              "name": "coleção",
+              "status": false
+            },
+            {
+              "name": "sub coleção",
+              "status": false
+            },
+            {
+              "name": "criterio de busca",
+              "status": false
+            }
+          ],
+          "process": [
+            {
+              "name": "pegar um conjunto de documentos, que atendem aos criterios de busca, no caminho especificado",
+              "status": false
+            }
+          ],
+          "outputs": [
+            {
+              "name": "retornar o status da execução",
+              "status": false
+            },
+            {
+              "name": "retornar os dados obtidos",
+              "status": false
+            }
+          ]
+        }
+      },
+      "update": {
+        "input": [
+          {
+            "name": "banco de dados",
+            "status": false
+          },
+          {
+            "name": "coleção",
+            "status": false
+          },
+          {
+            "name": "sub coleção",
+            "status": false
+          },
+          {
+            "name": "id",
+            "status": false
+          },
+          {
+            "name": "dados",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "pegar o documento que possui o id fornecido, no caminho especificado",
+            "status": false
+          },
+          {
+            "name": "atualizar os campos com alteração",
+            "status": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "retornar o status da execução",
+            "status": false
+          }
+        ]
+      },
+      "delete": {
+        "input": [
+          {
+            "name": "banco de dados",
+            "status": false
+          },
+          {
+            "name": "coleção",
+            "status": false
+          },
+          {
+            "name": "sub coleção",
+            "status": false
+          },
+          {
+            "name": "id",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "pegar o documento que possui o id fornecido, no caminho especificado",
+            "status": false
+          },
+          {
+            "name": "remover os dados",
+            "status": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "retornar o status da execução",
+            "status": false
+          }
+        ]
+      }
+    },
+    "firestorage": {
+      "create": {
+        "unico": {
+          "input": [
+            {
+              "name": "arquivo",
+              "status": false
+            }
+          ],
+          "process": [
+            {
+              "name": "vincular o arquivo ao usuário",
+              "status": false
+            },
+            {
+              "name": "inserir o arquivo no banco de dados",
+              "status": false
+            }
+          ],
+          "outputs": [
+            {
+              "name": "retornar o status da execução",
+              "status": false
+            }
+          ]
+        }
+      },
+      "read": {
+        "unico": {
+          "input": [
+            {
+              "name": "id do usuario",
+              "status": false
+            }
+          ],
+          "process": [
+            {
+              "name": "pegar o arquivo que possui o id fornecido",
+              "status": false
+            }
+          ],
+          "outputs": [
+            {
+              "name": "retornar o status da execução",
+              "status": false
+            },
+            {
+              "name": "retornar os dados obtidos",
+              "status": false
+            }
+          ]
+        }        
+      },
+      "update": {
+        "input": [
+          {
+            "name": "banco de dados",
+            "status": false
+          },
+          {
+            "name": "coleção",
+            "status": false
+          },
+          {
+            "name": "sub coleção",
+            "status": false
+          },
+          {
+            "name": "id",
+            "status": false
+          },
+          {
+            "name": "novo arquivo",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "pegar o documento que possui o id fornecido, no caminho especificado",
+            "status": false
+          },
+          {
+            "name": "atualizar o arquivo para novo arquivo e mover o antigo para um log de arquivos limitado a N arquivos",
+            "status": false
+          },
+          {
+            "name": "verificar se é necessário remover o arquivo usado menos recentemente",
+            "status": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "retornar o status da execução",
+            "status": false
+          }
+        ]
+      },
+      "delete": {
+        "input": [
+          {
+            "name": "id",
+            "status": false
+          }
+        ],
+        "process": [
+          {
+            "name": "pegar o arquivo que possui o id fornecido, no caminho especificado",
+            "status": false
+          },
+          {
+            "name": "remover os dados",
+            "status": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "retornar o status da execução",
+            "status": false
+          }
+        ]
+      }
+    }
+  },
+  "schemas": {
+    "user": {
+      "uuid": "string",
+      "name": "string",
+      "coins": "number",
+      "level": {
+        "value": "number",
+        "exp": "number",
+        "expToUp": "number"
+      },
+      "cards": {
+        "all": [{
+          "id": "number",
+          "quantity": "number"
+        }],
+        "hand": [{
+          "id": "number"
+        }]
+      },
+      "relacionamentos": {
+        "amigos": [{
+          "uuid": "string"
+        }],
+        "pedidosEnviados": [{
+          "uuid": "string"
+        }],
+        "pedidosRecebidos": [{
+          "uuid": "string"
+        }],
+        "bloqueados": [{
+          "uuid": "string"
+        }]
+      },
+      "settings": {
+        "card": {
+          "optionSelected": "string"
+        },
+        "sound": {
+          "optionSelected": "string"
+        }
+      }
+    },
+    "stats": {
+      "uuid": "string",
+      "duels": {
+        "wins": "number",
+        "loses": "number"
+      },
+      "cards": {
+        "total": "number"
+      }
+    },
+    "market": {
+      "npc": [
+        {
+          "name": "string",
+          "quantity": "number",
+          "price": "number"
+        }        
+      ],
+      "buy": [
+        {
+          "pokeId": "number",
+          "pokeName": "string",
+          "player": "string",
+          "price": "number",
+          "offerType": "string",
+          "createdAt": "Date",
+          "expireIn": "Date"
+        }
+      ],
+      "sell": [
+        {
+          "pokeId": "number",
+          "pokeName": "string",
+          "player": "string",
+          "price": "number",
+          "offerType": "string",
+          "createdAt": "Date",
+          "expireIn": "Date",
+          "sellItAnyWay": "boolean"
+        }
+      ],
+      "trade": [
+        {
+          "offeredPokeList": [
+            {
+              "pokeId": "number",
+              "pokeName": "string",
+              "quantity": "number"
+            }
+          ],          
+          "pokeId": "number",
+          "pokeName": "string",
+          "player": "string",
+          "offerType": "string",
+          "createdAt": "Date",
+          "expireIn": "Date"
+        }
+      ]
+    },
+    "matches": {
+      "attribeSelected": "string",
+      "round": "number",
+      "status": "string",
+      "winner": "string",
+      "date": "Date",
+
+      "playerOneUuid": "string",
+      "playerOneScore": "number",
+      "playerOneSelectedCard": "string",
+      "playerOneHand": [{
+        "id": "number"
+      }],
+
+      "playerTwoUuid": "string",
+      "playerTwoScore": "number",
+      "playerTwoSelectedCard": "string",
+      "playerTwoHand": [{
+        "id": "number"
+      }]      
+    }
+  }
+}
